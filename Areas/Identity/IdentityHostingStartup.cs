@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using AuthSystem.Areas.Identity.Data;
 using AuthSystem.Data;
 using Microsoft.AspNetCore.Hosting;
@@ -20,9 +20,15 @@ namespace AuthSystem.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("AuthSysDBContextConnection")));
 
-                services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<AuthSysDBContext>();
+                services.AddDefaultIdentity<ApplicationUser>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+
+                })
+                    .AddEntityFrameworkStores<AuthSysDBContext>();           
             });
         }
     }
-}
+} 
